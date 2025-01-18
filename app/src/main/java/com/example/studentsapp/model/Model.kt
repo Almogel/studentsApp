@@ -8,15 +8,18 @@ class Model private constructor(){
         val shared = Model()
     }
 
-    init {
-        for (i in 0..20){
-            val student = Student(
-                name = "Name $i",
-                id = i.toString(),
-                avatarUrl = "",
-                isChecked = false
-            )
-            students.add(student)
-        }
-    }
+//    init {
+//        for (i in 0..20){
+//            val student = Student(
+//                name = "Name $i",
+//                id = i.toString(),
+//                avatarUrl = "",
+//                isChecked = false,
+//                phone = "Phone $i",
+//                address = "Address $i"
+//
+//            )
+//            students.add(student)
+//        }
+//    }
 }
