@@ -3,6 +3,7 @@ package com.example.studentsapp
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -31,6 +32,7 @@ class AddStudentActivity : AppCompatActivity() {
         val saveTextField: TextView = findViewById(R.id.add_student_success_saved_text_view)
         val phoneTextField: EditText = findViewById(R.id.add_student_phone_text_field)
         val addressTextField: EditText = findViewById(R.id.add_student_address_text_field)
+        val isCheckedCheckBox: CheckBox = findViewById(R.id.add_student_activity_checked_checkbox)
 
 
         cancelButton.setOnClickListener {
@@ -42,15 +44,17 @@ class AddStudentActivity : AppCompatActivity() {
             val id = idTextField.text.toString()
             val phone = phoneTextField.text.toString()
             val address = addressTextField.text.toString()
+            val isChecked = isCheckedCheckBox.isChecked
 
-            if (name.isEmpty() || id.isEmpty()) {
+
+            if (name.isEmpty() || id.isEmpty() || phone.isEmpty() || address.isEmpty()) {
                 saveTextField.text = "Please fill in all fields"
             } else {
                 val newStudent = Student(
                     name = name,
                     id = id,
                     avatarUrl = "",
-                    isChecked = false,
+                    isChecked = isChecked,
                     phone = phone,
                     address = address
                 )
