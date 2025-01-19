@@ -1,6 +1,5 @@
 package com.example.studentsapp
 
-
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -37,9 +36,27 @@ class StudentsRecyclerViewActivity : AppCompatActivity() {
             }
         }
 
+    private val addStudentLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val newStudent = result.data?.getSerializableExtra("newStudent") as? Student
+                newStudent?.let {
+                    // Add to shared list
+                    Model.shared.students.add(it)
+
+                    // Add to local list and notify adapter
+                    students.add(it)
+                    adapter.notifyItemInserted(students.size - 1)
+                }
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_students_recycler_view)
+
+        // Set the title of the ActionBar
+        supportActionBar?.title = "Students List"
 
         students = Model.shared.students // Synchronize with shared list
 
@@ -60,7 +77,7 @@ class StudentsRecyclerViewActivity : AppCompatActivity() {
         val fab: FloatingActionButton = findViewById(R.id.add_student_fab)
         fab.setOnClickListener {
             val intent = Intent(this, AddStudentActivity::class.java)
-            startActivity(intent)
+            addStudentLauncher.launch(intent)
         }
     }
 }

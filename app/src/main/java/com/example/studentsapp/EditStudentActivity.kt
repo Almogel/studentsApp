@@ -2,6 +2,7 @@ package com.example.studentsapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -27,6 +28,8 @@ class EditStudentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_student)
+        supportActionBar?.title = "Edit Student"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         imageViewProfile = findViewById(R.id.imageViewProfile)
         editTextName = findViewById(R.id.editTextName)
@@ -76,12 +79,24 @@ class EditStudentActivity : AppCompatActivity() {
                 val index = Model.shared.students.indexOfFirst { it.id == studentToDelete.id }
                 if (index != -1) {
                     Model.shared.students.removeAt(index)
-                    setResult(RESULT_OK)
-                    finish()
+                    val intent = Intent(this, StudentsRecyclerViewActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    Toast.makeText(this, "Student deleted", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "Student not found", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }

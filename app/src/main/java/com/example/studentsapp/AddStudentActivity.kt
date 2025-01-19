@@ -2,6 +2,7 @@ package com.example.studentsapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -18,6 +19,8 @@ class AddStudentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_add_student)
+        supportActionBar?.title = "Add Student"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -34,7 +37,6 @@ class AddStudentActivity : AppCompatActivity() {
         val addressTextField: EditText = findViewById(R.id.add_student_address_text_field)
         val isCheckedCheckBox: CheckBox = findViewById(R.id.add_student_activity_checked_checkbox)
 
-
         cancelButton.setOnClickListener {
             finish()
         }
@@ -45,7 +47,6 @@ class AddStudentActivity : AppCompatActivity() {
             val phone = phoneTextField.text.toString()
             val address = addressTextField.text.toString()
             val isChecked = isCheckedCheckBox.isChecked
-
 
             if (name.isEmpty() || id.isEmpty() || phone.isEmpty() || address.isEmpty()) {
                 saveTextField.text = "Please fill in all fields"
@@ -59,16 +60,23 @@ class AddStudentActivity : AppCompatActivity() {
                     address = address
                 )
 
-
                 Model.shared.students.add(newStudent)
-
 
                 val intent = Intent(this, StudentsRecyclerViewActivity::class.java)
                 startActivity(intent)
 
-
                 finish()
             }
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
