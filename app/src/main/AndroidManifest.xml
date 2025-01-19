@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.studentsapp">
 
     <application
         android:allowBackup="true"
@@ -11,31 +11,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StudentsApp"
-        tools:targetApi="31" >
-        <activity
-            android:name=".adapter.StudentRecyclerAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".StudentDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".EditStudentActivity"
-            android:exported="false" />
+        tools:targetApi="31">
+
         <activity
             android:name=".StudentsRecyclerViewActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
         <activity
             android:name=".AddStudentActivity"
             android:exported="false" />
+
         <activity
-            android:name=".MainActivity"
-            android:exported="true" />
+            android:name=".EditStudentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".StudentDetailsActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

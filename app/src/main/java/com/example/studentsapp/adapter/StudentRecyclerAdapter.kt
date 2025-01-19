@@ -13,10 +13,14 @@ interface OnItemClickListener {
     fun onItemClick(position: Int)
 }
 
-class StudentRecyclerAdapter(private val students: MutableList<Student>) :
-    RecyclerView.Adapter<StudentRecyclerAdapter.StudentViewHolder>() {
+class StudentRecyclerAdapter() : RecyclerView.Adapter<StudentRecyclerAdapter.StudentViewHolder>() {
 
+    private var students: MutableList<Student> = mutableListOf()
     var listener: OnItemClickListener? = null
+
+    constructor(students: MutableList<Student>) : this() {
+        this.students = students
+    }
 
     inner class StudentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val nameTextView: TextView = itemView.findViewById(R.id.student_row_name_text_view)

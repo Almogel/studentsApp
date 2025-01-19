@@ -2,7 +2,9 @@ package com.example.studentsapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,6 +20,7 @@ class StudentDetailsActivity : AppCompatActivity() {
     private lateinit var addressTextView: TextView
     private lateinit var avatarImageView: ImageView
     private lateinit var editButton: Button
+    private lateinit var isCheckedCheckBox: CheckBox
     private var student: Student? = null
 
     private val editStudentLauncher =
@@ -43,6 +46,8 @@ class StudentDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_details)
+        supportActionBar?.title = "Student Details"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Bind views
         nameTextView = findViewById(R.id.student_details_name_text_view)
@@ -51,10 +56,14 @@ class StudentDetailsActivity : AppCompatActivity() {
         addressTextView = findViewById(R.id.student_details_address_text_view)
         avatarImageView = findViewById(R.id.student_avatar)
         editButton = findViewById(R.id.edit_student_button)
+        isCheckedCheckBox = findViewById(R.id.student_details_is_checked)
 
         // Get student from intent
         student = intent.getSerializableExtra("student") as? Student
         updateUI()
+
+        // Disable the CheckBox initially
+        isCheckedCheckBox.isEnabled = false
 
         // Edit button logic
         editButton.setOnClickListener {
@@ -71,6 +80,17 @@ class StudentDetailsActivity : AppCompatActivity() {
             phoneTextView.text = it.phone
             addressTextView.text = it.address
             avatarImageView.setImageResource(R.drawable.student)
+            isCheckedCheckBox.isChecked = it.isChecked
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
